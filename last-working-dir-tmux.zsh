@@ -11,7 +11,7 @@ chpwd_last_working_dir_tmux() {
     if [[ ! -d $cache_dir ]]; then
       mkdir -p $cache_dir
     fi
-    tmux_session=$(tmux display -p '#S')
+    tmux_session=$(tmux display -p '#S:#P')
     if [[ ! -z $tmux_session ]]; then
       local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
       pwd >| "$cache_file_session"
@@ -23,7 +23,7 @@ chpwd_last_working_dir_tmux() {
 
 # Changes directory to the last working directory in this tmux session
 lwd() {
-  tmux_session=$(tmux display -p '#S')
+  tmux_session=$(tmux display -p '#S:#P')
   local cache_file_session="$ZSH_CACHE_DIR/last-working-dir-tmux/$tmux_session"
   local cache_file_global="$ZSH_CACHE_DIR/last-working-dir-tmux/global"
   if [[ ! -z $tmux_session && -r "$cache_file_session" ]]; then
